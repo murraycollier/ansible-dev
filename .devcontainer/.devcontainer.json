@@ -1,0 +1,50 @@
+{
+    "name": "Docker in Docker",
+
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+        "args": {
+            "VARIANT": "3.11"
+        }
+    },
+
+    "workspaceFolder": "/workspaces/ansible-env",
+
+    "remoteUser": "mcollier",
+
+    "runArgs": [
+        "--name", "ansible-env",
+        "--hostname", "ansible-env"
+    ],
+
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+            "version": "latest",
+            "enableNonRootDocker": "true",
+            "moby": "false"
+        },
+        "ghcr.io/devcontainers/features/python:1": {},
+        "ghcr.io/devcontainers/features/aws-cli:1": {}
+    },
+    
+    "onCreateCommand": "bash ${containerWorkspaceFolder}/on-create.sh",
+    "postCreateCommand": "bash ${containerWorkspaceFolder}/post-create.sh",
+    
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "ansible.executionEnvironment.image": "quay.io/acme_corp/workshop_ee:latest",
+                "ansible.ansible.useFullyQualifiedCollectionNames": true,
+                "ansible.ansibleLint.enabled": true,
+                "python.defaultInterpreterPath": "/home/mcollier/.venv/bin/python"
+            },
+            "extensions": [
+                "ms-python.python",
+                "redhat.ansible"
+            ]
+        }
+    }
+}
+
